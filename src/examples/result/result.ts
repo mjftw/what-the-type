@@ -1,9 +1,19 @@
-/** A Symbol is a unique and immutable data type that is a primitive value.
- * A symbol's only possible value itself.
+/** The Result type is used to represent the result of an operation that could fail.
+ *  If is often used for situations where it is not unexpected that things might not work out.
+ *
+ *  For example, say we are trying to make an API call to a REST API.
+ *  We might get a 200 response with a JSON body, or a 404 response with an error body.
+ *  We can use a Result to represent the outcome of the API call.
+ *  If the API call was successful, we could return Ok(response.body), and if it failed, we could return Err("Oh no!").
+ *
+ *  The Result type can be used as a type-safe alternative in situations where we might otherwise throw an error.
  */
 
 import { None, Option, Some } from "./option";
 
+/** A Symbol is a unique and immutable data type that is a primitive value.
+ * A symbol's only possible value itself.
+ */
 // Here we define two symbols, okTag and errTag - these are used to identify the type of the Result.
 const okTag = Symbol("Ok");
 const errTag = Symbol("Err");

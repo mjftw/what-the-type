@@ -1,3 +1,17 @@
+/**
+ * The Option type is used to represent the result of an operation that may or may not return a value.
+ * It is often used for situations where a function may not return a value, and doing so is not an error.
+ *
+ * For example, if we were attempting to fetch a user record from a database by ID, there might not be
+ * a record for that ID, so we return an Option<User>.
+ * If there was a record, we would return it wrapped in `Some<User>`, and if there was no record, we would return `None`.
+ *
+ * It can be used as a more type-safe alternative to returning `null` or `undefined`.
+ *
+ * This is distinct from a `Result<T, E>`, where `E` is an error type, meaning that the operation could fail.
+ * In other words, an `Err` is a failure, whereas an `Option` can contain no value and that's okay.
+ */
+
 import { Result } from "./result";
 
 const someTag = Symbol("Some");
