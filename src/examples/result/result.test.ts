@@ -230,4 +230,38 @@ describe("Result", () => {
       result.error;
     });
   });
+
+  it("should map both ok and err values with mapBoth", () => {
+    const okResult = Result.ok(5).mapBoth(
+      (value) => value * 2,
+      (error) => error + "!!"
+    );
+    expect(okResult.unwrap()).toBe(10);
+
+    const errResult = Result.err("error").mapBoth(
+      (value) => value * 2,
+      (error) => error + "!!"
+    );
+    expect(errResult.unwrapOr("default")).toBe("default");
+    expect(errResult.isOk).toBe(false);
+    !errResult.isOk && expect(errResult.error).toBe("error!!");
+  });
+
+  it("should map ok value and ignore err function with mapBoth", () => {
+    const result = Result.ok(5).mapBoth(
+      (value) => value * 2,
+      (error) => error + "!!"
+    );
+    expect(result.unwrap()).toBe(10);
+  });
+
+  it("should map err value and ignore ok function with mapBoth", () => {
+    const result = Result.err("error").mapBoth(
+      (value) => value * 2,
+      (error) => error + "!!"
+    );
+    expect(result.unwrapOr("default")).toBe("default");
+    expect(result.isOk).toBe(false);
+    !result.isOk && expect(result.error).toBe("error!!");
+  });
 });

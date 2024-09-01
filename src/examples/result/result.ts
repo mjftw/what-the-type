@@ -16,6 +16,10 @@ interface Ok<T> {
   map<T2>(fn: (value: T) => T2): Result<T2, never>;
   mapErr<E2>(fn: (error: never) => E2): Result<T, E2>;
   andThen<T2, E2>(fn: (value: T) => Result<T2, E2>): Result<T2, E2>;
+  mapBoth<T2, E2>(
+    okFn: (value: T) => T2,
+    errFn: (error: never) => E2
+  ): Result<T2, never>;
 }
 
 /** The Err type represents a computation that has failed, and encapsulates an error of the generic type E. */
@@ -30,6 +34,10 @@ interface Err<E> {
   andThen<T2 = never, E2 = never>(
     fn: (value: never) => Result<T2, E2>
   ): Result<never, E>;
+  mapBoth<T2, E2>(
+    okFn: (value: never) => T2,
+    errFn: (error: E) => E2
+  ): Result<never, E2>;
 }
 
 /** The Result type is a tagged union of the Ok and Err types.
@@ -59,6 +67,12 @@ namespace Result {
       andThen<T2, E2>(fn: (value: T) => Result<T2, E2>): Result<T2, E2> {
         return fn(value);
       },
+      mapBoth<T2, E2>(
+        okFn: (value: T) => T2,
+        _errFn: (error: never) => E2
+      ): Result<T2, never> {
+        return Result.ok(okFn(value));
+      },
     };
   }
 
@@ -81,6 +95,12 @@ namespace Result {
       },
       andThen<T2, E2>(_fn: (value: never) => Result<T2, E2>): Result<never, E> {
         return this;
+      },
+      mapBoth<T2, E2>(
+        _okFn: (value: never) => T2,
+        errFn: (error: E) => E2
+      ): Result<never, E2> {
+        return Result.err(errFn(error));
       },
     };
   }
