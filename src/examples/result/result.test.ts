@@ -209,4 +209,25 @@ describe("Result", () => {
       result.value;
     });
   });
+
+  describe("assertErr", () => {
+    it("should throw when asserting ok", () => {
+      const result = sqrt(5);
+      expect(() => {
+        Result.assertErr(result);
+
+        // Access result.error to prove to the compiler that we've narrowed the type to an `Err`.
+        // If we got to this point, we have proven to the type checker that `result` was an `Err`.
+        result.error;
+      }).toThrow("Expected an Err, but got an Ok");
+    });
+
+    it("should return err value with unwrap", () => {
+      const result = sqrt(-1);
+      Result.assertErr(result);
+
+      // Access result.error to prove to the compiler that we've narrowed the type to an `Err`
+      result.error;
+    });
+  });
 });

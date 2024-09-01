@@ -128,6 +128,15 @@ namespace Result {
       throw new TypeError("Expected an Ok, but got an Err");
     }
   }
+
+  /** The opposite of `assertOk`, `assertErr` is a type guard that `asserts` that a value is an `Err`. */
+  export function assertErr<T, E>(
+    result: Result<T, E>
+  ): asserts result is Err<E> {
+    if (result._tag !== errTag) {
+      throw new TypeError("Expected an Err, but got an Ok");
+    }
+  }
 }
 
 export { Result, Ok, Err };
