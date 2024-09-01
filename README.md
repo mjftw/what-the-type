@@ -11,9 +11,9 @@ the Typescript type system, and how you can use them for fun and profit.
 
 A Rust style [Result](https://doc.rust-lang.org/std/result/) & [Option](https://doc.rust-lang.org/std/option/) type is a great way to show some interesting types in action, so we've got these.
 
-Check them out at [src/examples/result/result.ts](./src/examples/result/result.ts) and [src/examples/result/option](./src/examples/result/option.ts)
+Check them out in [result.ts](./src/examples/result/result.ts) and [option.ts](./src/examples/result/option.ts)
 
-They have 100% test coverage and would be very usable in real production code.
+They have 100% test coverage, developer friendly semantics, and and would be very usable in real production code.
 
 These examples demonstrate the following concepts in action:
 
