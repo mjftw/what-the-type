@@ -1,5 +1,6 @@
 /**
- * Simple example of a Result type.
+ * A simple example of a Result type.
+ * It wouldn't be as useful in practice as the `Result` type in `result.ts`, but it's much easier to read.
  *
  * This example showcases use of generics, union types, and type narrowing.
  */
