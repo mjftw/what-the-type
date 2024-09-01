@@ -47,3 +47,6 @@ out/
 *.ntvs*
 *.njsproj
 *.sln
+
+# Coverage
+coverage/
