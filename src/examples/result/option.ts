@@ -1,3 +1,5 @@
+import { Result } from "./result";
+
 const someTag = Symbol("Some");
 const noneTag = Symbol("None");
 
@@ -9,6 +11,7 @@ interface Some<T> {
   unwrapOr<T2>(defaultValue: T2): T;
   map<T2>(fn: (value: T) => T2): Option<T2>;
   andThen<T2>(fn: (value: T) => Option<T2>): Option<T2>;
+  toResult<E>(error: E): Result<T, never>;
 }
 
 interface None {
@@ -18,6 +21,7 @@ interface None {
   unwrapOr<T2>(defaultValue: T2): T2;
   map<T2>(fn: (value: never) => T2): Option<T2>;
   andThen<T2>(fn: (value: never) => Option<T2>): Option<T2>;
+  toResult<E>(error: E): Result<never, E>;
 }
 
 type Option<T> = Some<T> | None;
@@ -40,6 +44,9 @@ namespace Option {
       andThen<T2>(fn: (value: T) => Option<T2>): Option<T2> {
         return fn(value);
       },
+      toResult<E>(_error: E): Result<T, never> {
+        return Result.ok(value);
+      },
     };
   }
 
@@ -57,6 +64,9 @@ namespace Option {
     },
     andThen<T2>(_fn: (value: never) => Option<T2>): Option<T2> {
       return this;
+    },
+    toResult<E>(error: E): Result<never, E> {
+      return Result.err(error);
     },
   };
 

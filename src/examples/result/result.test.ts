@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Result } from "./result";
+import { Option } from "./option";
 
 describe("Result", () => {
   it("should unwrap ok value", () => {
@@ -263,5 +264,18 @@ describe("Result", () => {
     expect(result.unwrapOr("default")).toBe("default");
     expect(result.isOk).toBe(false);
     !result.isOk && expect(result.error).toBe("error!!");
+  });
+
+  it("should convert ok value to Some with toOption", () => {
+    const result = Result.ok(5);
+    const option = result.toOption();
+    expect(option.isSome).toBe(true);
+    expect(option.unwrap()).toBe(5);
+  });
+
+  it("should convert err value to None with toOption", () => {
+    const result = Result.err("error");
+    const option = result.toOption();
+    expect(option.isSome).toBe(false);
   });
 });

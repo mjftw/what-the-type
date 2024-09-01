@@ -2,6 +2,8 @@
  * A symbol's only possible value itself.
  */
 
+import { None, Option, Some } from "./option";
+
 // Here we define two symbols, okTag and errTag - these are used to identify the type of the Result.
 const okTag = Symbol("Ok");
 const errTag = Symbol("Err");
@@ -20,6 +22,7 @@ interface Ok<T> {
     okFn: (value: T) => T2,
     errFn: (error: never) => E2
   ): Result<T2, never>;
+  toOption(): Some<T>;
 }
 
 /** The Err type represents a computation that has failed, and encapsulates an error of the generic type E. */
@@ -38,6 +41,7 @@ interface Err<E> {
     okFn: (value: never) => T2,
     errFn: (error: E) => E2
   ): Result<never, E2>;
+  toOption(): None;
 }
 
 /** The Result type is a tagged union of the Ok and Err types.
@@ -73,6 +77,9 @@ namespace Result {
       ): Result<T2, never> {
         return Result.ok(okFn(value));
       },
+      toOption(): Some<T> {
+        return Option.some(value);
+      },
     };
   }
 
@@ -101,6 +108,9 @@ namespace Result {
         errFn: (error: E) => E2
       ): Result<never, E2> {
         return Result.err(errFn(error));
+      },
+      toOption(): None {
+        return Option.none;
       },
     };
   }
